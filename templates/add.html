@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1> Dobavlenie productov</h1>
+    <form action="/add_product/" style="width:500px; margin-left:380px" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="form-control" type="submit" class="btn btn-primary" value="Send">
+    </form>
+{%  endblock  %}

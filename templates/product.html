@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    <h1 class="white-tag"> {{ product.title }}</h1>
+    <hr>
+    {% for product in products %}
+        <h4> {{ products.id }}:{{ products.category }}</h4>
+
+    {% endfor %}
+    <hr>
+    {% for review in reviews %}
+        <h4> {{ review.id }}:{{ review.text }}</h4>
+        <hr>
+    {% endfor %}
+    <p>{{ products.price }}</p>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+body{
+    background: #37dbcd;
+    color: white;
+}
+
+.white-tag{
+    text-decoration: None;
+    color: #d04cc9;
+    margin: 20px;
+    padding: 10px;
+    border: white solid 1px;
+    border-radius: 40px;
+}
+
+.logo-img{
+    height: 100px;
+    width: 100px;
+}
+.navbar-barand a{
+    color: #8edb37;
+}

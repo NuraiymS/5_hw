@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>Spisok productov</h1>
+    <form action="/product/" class="row" method="get">
+        <div class="col-3" >
+            <input class="form-control" type="text" name="search_text" placeholder="Enter name">
+        </div>
+
+        <div class="col3">
+          <select class="form-control" name="product">
+          </select>
+        </div>
+        <div class="col-3">
+        <input class="btn btn-danger" type="submit" value="Send">
+        </div>
+            {% for product in product_selecter%}
+            <option value="{{ product.title }}">
+                {{ product.title }}
+            </option>
+            {% endfor %}
+        <option value="">All products</option>
+
+    </form>
+    {% for product in products %}
+        <hr>
+        <h4>Name of product: {{ product.title }}</h4>
+        <p> Price: {{ product.price }}</p>
+        <p>Category: {{ product.category.name }}</p>
+    {% endfor %}
+        <div class="col-3">
+            <input class="form-control" type="text" name="search_text" placeholder="Enter name">
+        </div>
+
+        <select name="product">
+            {% for product in product_selecter%}
+            <option value="{{ product.title }}">
+                {{ product.title }}
+            </option>
+            {% endfor %}
+        <option value="">All products</option>
+        </select>
+        <div class="col-3">
+             <input  class="form-control" type="submit" value="Send">
+        </div>
+
+    {% for product in products %}
+        <hr>
+        <h4>Name of product: {{ product.title }}</h4>
+        <p> Price: {{ product.price }}</p>
+        <p>Category: {{ product.category.name }}</p>
+    {% endfor %}
+{% endblock %}
+
