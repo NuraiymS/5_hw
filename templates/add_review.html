@@ -1,8 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h1> Add review</h1>
-    <form action="/add_review/" method="post">
-        {{ form }}
+    <form action="/add_review/" style="width:500px; margin-left:380px" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="'form-control" type="submit" class="btn btn-primary" value="Send">
+
     </form>
 
 {% endblock %}
+
+

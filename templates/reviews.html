@@ -1,38 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1> Vse otzyvy</h1>
-<form action="/review/" method="get">
-    <input type="text" name="search_text" placeholder="Enter word">
-    <input type="date" name="Enter_date" >
+{% extends 'layout.html' %}
+{% block content %}
 
-{#    <select name="review">#}
+    <h1> Vse otzyvy</h1>
+    <form action="/review/" method="get">
+        <input type="text" name="search_text" placeholder="Enter word">
+        <input type="date" name="Enter_date" >
 
-{#        {% for review in reviews %}#}
-{#        <option value="{{ review.text }}">#}
-{#            {{ review.text }}#}
-{#        </option>#}
-{#        {% endfor %}#}
-{#    </select>#}
 
-    <select name="review">
 
+        <select name="review">
+
+            {% for review in reviews %}
+            <option value="{{ review.date }}">
+                {{ review.date }}
+            </option>
+            {% endfor %}
+        </select>
+
+            <input type="submit" value="Send">
+        </form>
         {% for review in reviews %}
-        <option value="{{ review.date }}">
-            {{ review.date }}
-        </option>
+            <hr>
+            <h4>{{ review.text }}</h4>
+            <p> date: {{ review.date }}</p>
+            <p>product: {{ review.product.title }}</p>
         {% endfor %}
-    </select>
-
-        <input type="submit" value="Send">
-    </form>
-    {% for review in reviews %}
-        <hr>
-        <h4>otzyv{{ review.text }}</h4>
-        <p> date: {{ review.date }}</p>
-        <p>product: {{ review.product.title }}</p>
-    {% endfor %}
+{% endblock %}

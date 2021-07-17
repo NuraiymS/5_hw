@@ -126,7 +126,8 @@ def add_product(request):
 
 
 def add_review(request):
-    # if request.method == 'GET':
+    if request.method == 'GET':
+        print('GET')
         form = ReviewCreateForm()
         data = {
             'form': form
@@ -134,4 +135,14 @@ def add_review(request):
 
         return render(request, 'add_review.html', context=data)
 
+    elif request.method == 'POST':
+        print('POST')
+        print(request.POST)
+        form = ReviewCreateForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/review/')
+        else:
+            return render (request,'add_review.html',
+                           context={'form': form})
 
