@@ -29,6 +29,10 @@ urlpatterns = [
     path('category', views.category_list),
     path('add_product/',views.add_product),
     path('add_review/', views.add_review),
+    path('login/', views.login),
+    path('logout/', views.logout),
+
+
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

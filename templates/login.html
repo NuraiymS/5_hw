@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong> Error </strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    <h1> Enter to system</h1>
+    <form action="/login/" style="width:500px; margin-left:380px" method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="Enter the nickname" name="username" class="form-control">
+        <br>
+        <input type="password" placeholder="Enter the password" name="password" class="form-control">
+        <br>
+        <input class="'form-control" type="submit" class="btn btn-primary" value="Send">
+    </form>
+{% endblock  %}

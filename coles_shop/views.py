@@ -1,6 +1,7 @@
 import datetime
 from unicodedata import category
 
+from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -15,6 +16,7 @@ def hello_world(request):
     return HttpResponse(b'<h1>Hello world</h1>')
 
 def index(request):
+    print(request.user.id)
     products = Product.objects.all()
     data= {
         'title': "All products",
@@ -93,6 +95,7 @@ def category_list(request):
 
 
 def review_list(request):
+    print(request.user)
     text = request.GET.get('search_text', '')
     reviews = Review.objects.all()
 
@@ -124,7 +127,7 @@ def add_product(request):
                           context={'form': form})
 
 
-
+@login_required(login_url='/login/')
 def add_review(request):
     if request.method == 'GET':
         print('GET')
@@ -143,6 +146,33 @@ def add_review(request):
             form.save()
             return redirect('/review/')
         else:
-            return render (request,'add_review.html',
+            return render(request,'add_review.html',
                            context={'form': form})
+
+from django.contrib import auth
+
+def login(request):
+    # print(request.GET.get('next', ''))
+    data = {}
+    next = (request.GET.get('next', ''))
+    if next:
+        data = {
+            'message': 'Please authorise to add review'
+        }
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username, password)
+        user = auth.authenticate(username=username, password=password)
+        if user:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            data['message'] = 'Enter the correct data!'
+    return render(request, 'login.html', context=data)
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
 
