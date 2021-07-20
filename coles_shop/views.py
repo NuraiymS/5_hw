@@ -6,7 +6,7 @@ from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from .forms import ProductCreateForm, ReviewCreateForm
+from .forms import ProductCreateForm, ReviewCreateForm, UserRegisterForm
 from .models import Product, Category, Review
 
 
@@ -176,3 +176,17 @@ def logout(request):
     auth.logout(request)
     return redirect('/')
 
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(data=request.POST)
+        if form.is_valid():
+            pass
+        else:
+            return render(request, 'register.html', context={
+                'form': form
+            })
+    data = {
+        'form': UserRegisterForm()
+    }
+    print(data)
+    return render(request, 'register.html', context=data)

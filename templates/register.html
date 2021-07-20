@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<h1> User Register</h1>
+    <form action="/register/" method="post">
+        {% csrf_token %}
+        {{ forms.as_p }}
+        <input type="submit" value="Send" class="btn btn-primary">
+    </form>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import TextInput, NumberInput, Select
 
@@ -54,5 +55,26 @@ class ReviewCreateForm(forms.ModelForm):
             attrs={
                     'type': 'date',
                 }
-            )
+            ),
         }
+
+
+class UserRegisterForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'class': 'Form-control'}
+    ))
+    password = forms.CharField(max_length=100,
+                               widget=forms.PasswordInput(
+                                   attrs={'placeholder': 'Password',
+                                          'class': 'form-control'}
+                               ))
+    password1 = forms.CharField(max_length=100,
+                                widget=forms.PasswordInput(
+                                    attrs={'placeholder': 'Repeat the Password',
+                                           'class': 'form-control'}
+                                ))
+
+    # def clean_password1(self):
+    #     users = User.objects.filter(username=self.cleaned_data['password1'])
+        # if users.password1 == password:
+        #     raise ValidationError('Incorrect password')
