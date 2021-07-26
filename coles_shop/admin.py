@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from coles_shop.models import Product, Category, Review
+from coles_shop.models import Product, Category, Review, ConfirmCode
 
 
 class ProductInline(admin.StackedInline):
@@ -35,6 +35,9 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = 'id product text'.split()
 
 
+
+
+admin.site.register(ConfirmCode)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Review, ReviewAdmin)

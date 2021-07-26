@@ -1,13 +1,17 @@
 import datetime
+import secrets
 from unicodedata import category
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.db.models import QuerySet
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .forms import ProductCreateForm, ReviewCreateForm, UserRegisterForm
-from .models import Product, Category, Review
+from .models import Product, Category, Review, ConfirmCode
 
 
 # Create your views here.
@@ -166,6 +170,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user:
             auth.login(request, user)
+
             return redirect('/')
         else:
             data['message'] = 'Enter the correct data!'
@@ -180,7 +185,20 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
-            pass
+            user = User.objects.create_user(
+                username=request.POST['email'],
+
+                is_active=False
+            )
+            user.set_password(raw_password=request.POST['password'])
+            code = secrets.token_urlsafe(16)
+            ConfirmCode.objects.create(user=user, code=code)
+            send_mail(
+                subject='Activation Code',
+                message=f'http://127.0.0.1:8000/activate/{code}/',
+                from_email=settings.EMAIL_HOST,
+                recipient_list=[request.POST['email']]
+            )
         else:
             return render(request, 'register.html', context={
                 'form': form
@@ -190,3 +208,12 @@ def register(request):
     }
     print(data)
     return render(request, 'register.html', context=data)
+
+def activate_code(request, code):
+    user=ConfirmCode.objects.filter(code=code).first()
+    if user:
+        user=user.user
+    auth.login(request=request, user=user)
+    products=Product.objects.all()
+
+    return render(request, 'layout.html', context={'products': products})

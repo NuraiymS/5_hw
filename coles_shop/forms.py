@@ -74,7 +74,11 @@ class UserRegisterForm(forms.Form):
                                            'class': 'form-control'}
                                 ))
 
-    # def clean_password1(self):
-    #     users = User.objects.filter(username=self.cleaned_data['password1'])
-        # if users.password1 == password:
-        #     raise ValidationError('Incorrect password')
+    def clean(self):
+        print(self.cleaned_data)
+        password = self.cleaned_data['password']
+        password1 = self.cleaned_data['password1']
+        if password1 != password:
+            raise ValidationError('Incorrect password')
+
+        return
