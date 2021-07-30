@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db.models import QuerySet
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
 from .forms import ProductCreateForm, ReviewCreateForm, UserRegisterForm
@@ -217,3 +217,8 @@ def activate_code(request, code):
     products=Product.objects.all()
 
     return render(request, 'layout.html', context={'products': products})
+
+
+def product_count(request):
+    count = Product.objects.all().count()
+    return JsonResponse(data={'count': count})

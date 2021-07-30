@@ -32,7 +32,8 @@ urlpatterns = [
     path('login/', views.login),
     path('logout/', views.logout),
     path('register/', views.register),
-    path('activate/<str:code>/',views.activate_code)
+    path('activate/<str:code>/',views.activate_code),
+    path('product/count/', views.product_count)
 
 
 

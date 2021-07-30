@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <h1 class="white-tag"> {{ title }}</h1>
+    <a onclick="func()"><h1 class="white-tag"> {{ title }}</h1></a>
     {% for products in products %}
         <a class="white-tag" href="/products/{{ products.id }}/">
-            {{ products.id }} : {{ products.title }}</a>
+            {{ products.id }} : {{ products.title}}</a>
     {% endfor %}
 
 {% endblock %}
