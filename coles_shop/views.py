@@ -1,4 +1,5 @@
 import datetime
+import json
 import secrets
 from unicodedata import category
 
@@ -9,6 +10,7 @@ from django.core.mail import send_mail
 from django.db.models import QuerySet
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import ProductCreateForm, ReviewCreateForm, UserRegisterForm
 from .models import Product, Category, Review, ConfirmCode
@@ -222,3 +224,14 @@ def activate_code(request, code):
 def product_count(request):
     count = Product.objects.all().count()
     return JsonResponse(data={'count': count})
+
+@csrf_exempt
+def search(request):
+    if request.method == 'POST':
+        text = json.loads(request.body).get('search_text', '')
+        products = Product.objects.filter(name__contains=text)
+        return JsonResponse(data=list(products.values()), safe=False)
+
+
+def product_search(request):
+    return render(request, 'search.html')
